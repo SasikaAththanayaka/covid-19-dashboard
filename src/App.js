@@ -2,11 +2,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import {Card,CardColumns,Form,CardDeck} from 'react-bootstrap';
-import Pagination from 'react-bootstrap/Pagination'
 import { useEffect, useState } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import CardDaily from './Components/CardDaily.js';
-import Header from './Header';
+import Header from './Components/Header.js';
 
 function App (){
   const [latest , setLatest] = useState([]);
@@ -31,8 +30,8 @@ function App (){
 
   const countries =filterCountry.map((data,i) => {
     return(
-      <CardDeck >
-      <Card key={i} bg="dark" text ="light" className ="text-center" style={{ margin : "20px" }}>
+      <CardDeck  >
+      <Card  key={i} bg="dark" text ="light" className ="text-center" style={{ margin : "20px" }}>
         <Card.Body>
         <Card.Img variant="top" src={data.countryInfo.flag} rounded   />
           <Card.Title>{data.country}</Card.Title>
@@ -74,23 +73,13 @@ function App (){
     return (
       <div className="App">
         <div className="conatiner-fluid">
-          <Header/>
+          <Header country={setSearchCountry}/>
         </div>
 
         <div className="conatiner-fluid">
           <CardDaily latestUpdate={latest}/>
         </div>
 
-        <div className="conatiner-fluid">
-        
-          <Form className="form"> 
-                <Form.Group className="mb-3"  >
-                  <Form.Control type="text" placeholder="Search Country" onChange={(e) => setSearchCountry(e.target.value)}/>
-          </Form.Group>
-
-              
-          </Form>
-      </div>
       <div className="conatiner-fluid">
         <CardColumns>
           {countries}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,CardDeck} from 'react-bootstrap';
+import {Card,CardDeck,Badge} from 'react-bootstrap';
 
 function CardDaily(props){
     
@@ -9,53 +9,55 @@ function CardDaily(props){
 
     return(
         <div className="conatiner-fluid">
-          
-            <CardDeck >
-            <Card className="card" bg="secondary" text ="light">
+          <div className="Container">
+          <CardDeck >
+            <Card className="card" bg="danger" text ="light">
                 <Card.Body>
-                  <Card.Title>Active</Card.Title>
+                  <Card.Title><Badge variant="danger">Active</Badge>{' '}</Card.Title>
                   <Card.Text>
-                      {active}
+                  <Badge variant="danger">{active}</Badge>{' '}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <small >Last updated {updatedDate} </small>
+                  <small ><Badge variant="danger">Last updated {updatedDate} </Badge>{' '} </small>
                 </Card.Footer>
               </Card>
-              <Card className="card" bg="secondary" text ="light">
+              <Card className="card" bg="warning" text ="light">
                 <Card.Body>
-                  <Card.Title>Cases</Card.Title>
+                  <Card.Title><Badge variant="warning">Cases</Badge></Card.Title>
                   <Card.Text>
-                      {cases}
+                  <Badge variant="warning">{cases}</Badge>
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <small >Last updated {updatedDate} </small>
+                  <small ><Badge variant="warning">Last updated {updatedDate} </Badge></small>
                 </Card.Footer>
               </Card>
-              <Card className="card" bg="secondary" text ="light">
+              <Card className="card" bg="danger" text ="light">
                 <Card.Body>
-                  <Card.Title>Deaths</Card.Title>
+                  <Card.Title><Badge variant="danger">Deaths</Badge>{' '}</Card.Title>
                   <Card.Text>
-                      {deaths}
+                  <Badge variant="danger">{deaths}</Badge>{' '}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer >
-                  <small >Last updated {updatedDate} </small>
+                  <small ><Badge variant="danger">Last updated {updatedDate}</Badge>{' '} </small>
                 </Card.Footer>
               </Card>
-              <Card className="card" bg="secondary" text ="light">
+              <Card className="card" bg="success" text ="light">
                 <Card.Body>
-                  <Card.Title>Recovered</Card.Title>
+                  <Card.Title><Badge variant="success">Recovered</Badge>{' '}</Card.Title>
                   <Card.Text>
-                      {recovered}
+                  <Badge variant="success">{recovered}</Badge>{' '}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <small >Last updated {updatedDate} </small>
+                  <small ><Badge variant="success">Last updated {updatedDate}</Badge>{' '} </small>
                 </Card.Footer>
               </Card>
           </CardDeck>
+          </div>
+            
         </div>
     );
 
