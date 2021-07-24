@@ -6,11 +6,15 @@ import { useEffect, useState } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import CardDaily from './Components/CardDaily.js';
 import Header from './Components/Header.js';
+import ReactPaginate from "react-paginate";
 
 function App (){
   const [latest , setLatest] = useState([]);
   const [result , setResult] = useState([]);
   const [searchCountry,setSearchCountry] =useState("");
+  const [pageNumber,setPageNumber] =useState(0);
+
+  
 
   useEffect(() =>{
     axios.all([axios.get(`https://corona.lmao.ninja/v2/all`),
@@ -28,7 +32,7 @@ function App (){
     return searchCountry !== "" ? item.country.includes(searchCountry) : item;
   })
 
-  const countries =filterCountry.map((data,i) => {
+ /* const countries =filterCountry.map((data,i) => {
     return(
       <CardDeck  >
       <Card  key={i} bg="dark" text ="light" className ="text-center" style={{ margin : "20px" }}>
@@ -67,8 +71,56 @@ function App (){
       </CardDeck>
     );
   });
+*/
+const usersPerPage =5 ;
+const pagesVisited =pageNumber * usersPerPage;
+const pageCount =Math.ceil(filterCountry.length/usersPerPage);
 
-  
+const changePage = ({selected}) =>{
+setPageNumber(selected);
+};
+
+const displayUsers =filterCountry.slice(pagesVisited, pagesVisited + usersPerPage)
+.map((data,i) =>{
+  return(
+    <CardDeck  >
+      <Card  key={i} bg="dark" text ="light" className ="text-center" style={{ margin : "20px" }}>
+        <Card.Body>
+        <Card.Img variant="top" src={data.countryInfo.flag} rounded   />
+          <Card.Title>{data.country}</Card.Title>
+          <Card.Text>Today Cases {data.todayCases}</Card.Text>
+          <Card.Text>Today Deaths {data.todayDeaths}</Card.Text>
+          <Card.Text>Today Recovered {data.todayRecovered}</Card.Text>
+          <Card.Text>Cases {data.cases}</Card.Text>
+          <Card.Text>Active {data.active}</Card.Text>
+          <Card.Text>Deaths {data.deaths}</Card.Text>
+          <Card.Text>Recovered {data.recovered}</Card.Text>
+          
+        </Card.Body>
+       
+      </Card>
+      <Pie
+        data={{
+          labels :['Infected' ,"Recoverd" , "Deaths"],
+          datasets : [{
+            label : "People",
+            backgroundColor :[
+              'rgb(106, 90, 205)',
+              'rgb(60, 179, 113)',
+              'rgba(255,0,0,0.5)',
+            ],
+            data : [data.todayCases,data.todayRecovered,data.todayDeaths]
+          }]
+        }}
+        option={{
+          legend:{display :false},
+          title :{display :true , text : `Current State in ${data.country}`}
+        }}
+      />
+      </CardDeck>
+  );
+});
+
 
     return (
       <div className="App">
@@ -82,9 +134,23 @@ function App (){
 
       <div className="conatiner-fluid">
         <CardColumns>
-          {countries}
+          {displayUsers}
         </CardColumns>
-        </div>
+      </div>
+
+      <div className="paginate">
+      <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"paginationBttn"}
+          previousLinkClassName={"previousBttn"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+        />
+      </div>
     
       </div>
     
