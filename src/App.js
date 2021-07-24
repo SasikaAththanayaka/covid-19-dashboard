@@ -72,7 +72,7 @@ function App (){
     );
   });
 */
-const usersPerPage =5 ;
+const usersPerPage =3 ;
 const pagesVisited =pageNumber * usersPerPage;
 const pageCount =Math.ceil(filterCountry.length/usersPerPage);
 
